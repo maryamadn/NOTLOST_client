@@ -1,4 +1,4 @@
-import { Field, Formik, Form } from "formik";
+import { Field, Formik, Form, ErrorMessage } from "formik";
 import signUpValidation from "../../Validations/signUpValidation";
 import axios from "axios";
 import urlcat from "urlcat";
@@ -34,7 +34,7 @@ const SignUp = () => {
   };
 
   return (
-    <>
+    <div className="container items-center text-center max-w-fit p-10 bg-base-300 rounded-box card">
       <Formik
         initialValues={{
           username: "",
@@ -53,61 +53,102 @@ const SignUp = () => {
       >
         {({ values, errors, touched, handleChange, handleBlur }) => (
           <Form>
-            Username
+            <label className="label">
+              <span className="label-text">Username</span>
+            </label>
             <br />
             <Field
+              className="input input-bordered w-full max-w-xs input-sm"
               name="username"
               onChange={handleChange}
               onBlur={handleBlur}
               value={values.username}
             />
-            {errors.username && touched.username ? (
+            {/* {errors.username && touched.username ? (
               <div>{errors.username}</div>
-            ) : null}
+            ) : null} */}
+            <label className="label max-w-xs">
+              <span className="label-text-alt">
+                <ErrorMessage name="username" />
+              </span>
+            </label>
             <br />
-            Password
+            <label className="label">
+              <span className="label-text">Password</span>
+            </label>
             <br />
             <Field
+            type='password'
+            className="input input-bordered w-full max-w-xs input-sm"
               name="password"
               onChange={handleChange}
               onBlur={handleBlur}
               value={values.password}
             />
-            {errors.password && touched.password ? (
+            {/* {errors.password && touched.password ? (
               <div>{errors.password}</div>
-            ) : null}
+            ) : null} */}
+                        <label className="label">
+              <span className="label-text-alt">
+                <ErrorMessage name="password" />
+              </span>
+            </label>
             <br />
-            Email
+            <label className="label">
+              <span className="label-text">Email</span>
+            </label>
             <br />
             <Field
+            className="input input-bordered w-full max-w-xs input-sm"
               name="email"
               onChange={handleChange}
               onBlur={handleBlur}
               value={values.email}
             />
-            {errors.email && touched.email ? <div>{errors.email}</div> : null}
+            {/* {errors.email && touched.email ? <div>{errors.email}</div> : null} */}
+            <label className="label">
+              <span className="label-text-alt">
+                <ErrorMessage name="email" />
+              </span>
+            </label>
             <br />
-            Full Name
+            <label className="label">
+              <span className="label-text">Full Name</span>
+            </label>
             <br />
             <Field
+            className="input input-bordered w-full max-w-xs input-sm"
               name="full_name"
               onChange={handleChange}
               onBlur={handleBlur}
               value={values.full_name}
             />
-            {errors.full_name && touched.full_name ? (
+            {/* {errors.full_name && touched.full_name ? (
               <div>{errors.full_name}</div>
-            ) : null}
+            ) : null} */}
+                        <label className="label">
+              <span className="label-text-alt">
+                <ErrorMessage name="full_name" />
+              </span>
+            </label>
             <br />
-            Phone Number
+            <label className="label">
+              <span className="label-text">Phone Number</span>
+            </label>
             <br />
             <Field
+            className="input input-bordered w-full max-w-xs input-sm"
               name="phone"
               onChange={handleChange}
               onBlur={handleBlur}
               value={values.phone}
             />
-            {errors.phone && touched.phone ? <div>{errors.phone}</div> : null}
+            {/* {errors.phone && touched.phone ? <div>{errors.phone}</div> : null} */}
+            <label className="label">
+              <span className="label-text-alt">
+                <ErrorMessage name="phone" />
+              </span>
+            </label>
             <br />
             <button
               type="submit"
@@ -117,7 +158,7 @@ const SignUp = () => {
                   Object.keys(touched).length !== 0
                 )
               }
-              style={{ backgroundColor: "lime" }}
+              className="btn btn-accent"
             >
               Sign up
             </button>
@@ -127,7 +168,7 @@ const SignUp = () => {
           </Form>
         )}
       </Formik>
-    </>
+    </div>
   );
 };
 

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Formik, Form, Field } from "formik";
+import { Formik, Form, Field, ErrorMessage } from "formik";
 import urlcat from "urlcat";
 import signInValidation from "../../Validations/signInValidation";
 import axios from "axios";
@@ -38,7 +38,7 @@ const SignIn = ({ setUser }) => {
         const user = parseJwt(data.token);
         setUser(user);
         console.log(user);
-        navigate("/founditems");
+        navigate("/items");
       })
       .catch((error) => {
         console.log(error);
@@ -51,8 +51,9 @@ const SignIn = ({ setUser }) => {
   };
 
   return (
-    <>
+    <div className="container items-center text-center max-w-fit p-10 bg-base-300 rounded-box card">
       <Formik
+      className="container items-center text-center"
         initialValues={{
           username: "",
           password: "",
@@ -65,39 +66,54 @@ const SignIn = ({ setUser }) => {
       >
         {({ values, errors, touched, handleChange, handleBlur }) => (
           <Form>
-            Username
             <br />
+            <div className="text-center">
             <Field
+            placeholder='username'
+            className="input input-bordered w-full max-w-xs input-sm"
               name="username"
               onChange={handleChange}
               onBlur={handleBlur}
               value={values.username}
             />
+            
             {errors.username && touched.username ? (
-              <div>{errors.username}</div>
+              <div className="label-text-alt mt-3 text-left">{errors.username}</div>
             ) : null}
-            <br />
-            Password
+            </div>
+                                    {/* <label className="label">
+              <span className="label-text-alt">
+                <ErrorMessage name="username" />
+              </span>
+            </label> */}
             <br />
             <Field
+            type='password'
+            placeholder='password'
+            className="input input-bordered w-full max-w-xs input-sm"
               name="password"
               onChange={handleChange}
               onBlur={handleBlur}
               value={values.password}
             />
-            {errors.password && touched.password ? (
+            {/* {errors.password && touched.password ? (
               <div>{errors.password}</div>
-            ) : null}
+            ) : null} */}
+                        <label className="label">
+              <span className="label-text-alt">
+                <ErrorMessage name="password" />
+              </span>
+            </label>
             <br />
             <button
               type="submit"
+              className="btn btn-outline btn-ghost"
               disabled={
                 !(
                   Object.keys(errors).length === 0 &&
                   Object.keys(touched).length !== 0
                 )
               }
-              style={{ backgroundColor: "lime" }}
             >
               Sign in
             </button>
@@ -105,7 +121,7 @@ const SignIn = ({ setUser }) => {
           </Form>
         )}
       </Formik>
-    </>
+    </div>
   );
 };
 

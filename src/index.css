@@ -1,3 +1,8 @@
-body {
-    font-family: 'Inter', sans-serif;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+input::-webkit-calendar-picker-indicator {
+    background-color: #cd984a;
+    margin-left: 10px;
 }
