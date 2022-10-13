@@ -1,4 +1,5 @@
 import { Link, Outlet, useNavigate } from "react-router-dom";
+import ErrorPage from "./ErrorPage";
 
 const Layout = ({ user, setUser }) => {
   const navigate = useNavigate();
@@ -93,9 +94,12 @@ const Layout = ({ user, setUser }) => {
           </ul>
         </div>
       </div>
-      <div className="my-20">
+
+
+        <div className="my-20">
       <Outlet/>
       </div>
+      
       <div className="footer footer-center p-4 bg-secondary self-end">
         <p>©2022 NOTLOST</p>
       </div>

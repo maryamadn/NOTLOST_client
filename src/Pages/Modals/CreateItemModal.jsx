@@ -35,12 +35,13 @@ const CreateItemModal = ({
     found_lost_by: user.id,
   });
 
-  const handleCreateItem = (values) => {
+  const handleCreateItem = async (values) => {
     const url = urlcat(SERVER, "/items/");
+  
 
     values.date_time = new Date()
-
-    axios
+    console.log('1',values)
+    await axios
       .post(url, values)
       .then(({ data }) => {
         const item_id = data[0][0]
@@ -84,6 +85,8 @@ const CreateItemModal = ({
         console.log(error);
         setCreateItemSuccessful(false);
       });
+
+      console.log('12',values)
   };
 
   return (
@@ -94,6 +97,15 @@ const CreateItemModal = ({
         initialValues={initialValues}
         validationSchema={createItemValidation}
         onSubmit={(values, {resetForm}) => {
+          const showPosition = (position) => {
+            const location =`${position.coords.latitude}, ${position.coords.longitude}`
+            values.last_location = location
+          }
+          if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(showPosition)
+          } else {
+            console.log('not supported')
+          }
           handleCreateItem(values);
           resetForm()
         }}

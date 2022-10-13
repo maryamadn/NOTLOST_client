@@ -34,7 +34,7 @@ const SignUp = () => {
   };
 
   return (
-    <div className="container items-center text-center max-w-fit p-10 bg-base-300 rounded-box card">
+    <div className="container items-center text-center max-w-xs p-10 bg-base-300 rounded-box card">
       <Formik
         initialValues={{
           username: "",

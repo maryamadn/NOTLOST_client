@@ -189,7 +189,7 @@ const Items = ({ user }) => {
                       value={values.colour}
                       onChange={handleChange}
                     >
-                      <option disabled>Select</option>
+                      <option disabled>select</option>
                       <option>All Colours</option>
                       {colours.map((colour) => (
                         <option value={colour}>{colour}</option>
@@ -253,7 +253,7 @@ const Items = ({ user }) => {
             </Formik>
           </div>
         </div>
-      <div className="col-start-2 col-span-2 grid grid-cols-3 gap-10">
+      <div className="col-start-2 col-span-2 grid grid-cols-3 gap-10 mr-20">
         {foundItems.msg ? (
           <div className="w-full cols-span-3 text-lg font-bold col-start-2 text-center">
             NO ITEMS FOUND

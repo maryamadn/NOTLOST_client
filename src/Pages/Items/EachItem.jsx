@@ -2,20 +2,20 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import urlcat from "urlcat";
-import { format, set } from "date-fns";
 import FormatDate from "../../Components/FormatDate";
 import { Field, Form, Formik, useFormikContext } from "formik";
 import createItemValidation from "../../Validations/createItemValidation";
 import catsubcatFilters from "../../Data/catsubcatFilters";
 import colours from "../../Data/colours";
-import EnquireModal from "../Modals/EnqurieModal";
-import Map from "../../Components/Home";
-import Home from "../../Components/Home";
+import EnquireModal from "../Modals/EnquireModal";
+import Map from "../../Components/Map";
 import PhotoUpload from "../../Components/PhotoUpload";
+import ErrorPage from "../Misc/ErrorPage";
 
 const SERVER = process.env.REACT_APP_SERVER;
 
 const EachItem = ({ user }) => {
+  
   const [item, setItem] = useState({});
   const [editableItem, setEditableItem] = useState(false);
   const [editItemSuccessful, setEditItemSuccessful] = useState(true);
@@ -154,6 +154,7 @@ const EachItem = ({ user }) => {
     const { errors } = useFormikContext();
     setFormErrors(errors);
   };
+  
   return (
     <>
       {!editableItem && (
@@ -195,7 +196,7 @@ const EachItem = ({ user }) => {
                 ))}
             </div>
             <div className="flex flex-col gap-10">
-              <p className="text-4xl font-medium">{item.title}</p>
+              <p className="text-4xl font-medium capitalize">{item.title}</p>
               <p className="text-2xl">{item.description}</p>
               {(item.found_lost_by === user.id || user.is_admin) && (
                 <div className="flex place-content-center gap-10">
@@ -232,13 +233,13 @@ const EachItem = ({ user }) => {
                 ✕
               </label>
               <div>
-                <EnquireModal status={item.status} />
+                <EnquireModal status={item.status} found_lost_by={item.found_lost_by} type={item.type} />
               </div>
               <div className="modal-action"></div>
             </div>
           </div>
 
-          <Home />
+          <Map />
         </div>
       )}
       {editableItem && (
