@@ -31,7 +31,7 @@ const SignIn = ({ setUser }) => {
   };
 
   const handleSignIn = (values) => {
-    const url = urlcat(SERVER, "/users/signin/");
+    const url = urlcat(SERVER, "/users/signin");
     axios
       .post(url, values)
       .then(({ data }) => {
