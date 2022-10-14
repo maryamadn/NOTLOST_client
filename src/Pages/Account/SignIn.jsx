@@ -31,7 +31,7 @@ const SignIn = ({ setUser }) => {
   };
 
   const handleSignIn = (values) => {
-    const url = urlcat(SERVER, "/users/signin");
+    const url = urlcat(SERVER, "/users/signin/");
     axios
       .post(url, values)
       .then(({ data }) => {
@@ -53,7 +53,7 @@ const SignIn = ({ setUser }) => {
   return (
     <div className="container items-center text-center max-w-fit p-10 bg-base-300 rounded-box card">
       <Formik
-      className="container items-center text-center"
+        className="container items-center text-center"
         initialValues={{
           username: "",
           password: "",
@@ -68,29 +68,31 @@ const SignIn = ({ setUser }) => {
           <Form>
             <br />
             <div className="text-center">
-            <Field
-            placeholder='username'
-            className="input input-bordered w-full max-w-xs input-sm"
-              name="username"
-              onChange={handleChange}
-              onBlur={handleBlur}
-              value={values.username}
-            />
-            
-            {errors.username && touched.username ? (
-              <div className="label-text-alt mt-3 text-left">{errors.username}</div>
-            ) : null}
+              <Field
+                placeholder="username"
+                className="input input-bordered w-full max-w-xs input-sm"
+                name="username"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.username}
+              />
+
+              {errors.username && touched.username ? (
+                <div className="label-text-alt mt-3 text-left">
+                  {errors.username}
+                </div>
+              ) : null}
             </div>
-                                    {/* <label className="label">
+            {/* <label className="label">
               <span className="label-text-alt">
                 <ErrorMessage name="username" />
               </span>
             </label> */}
             <br />
             <Field
-            type='password'
-            placeholder='password'
-            className="input input-bordered w-full max-w-xs input-sm"
+              type="password"
+              placeholder="password"
+              className="input input-bordered w-full max-w-xs input-sm"
               name="password"
               onChange={handleChange}
               onBlur={handleBlur}
@@ -99,7 +101,7 @@ const SignIn = ({ setUser }) => {
             {/* {errors.password && touched.password ? (
               <div>{errors.password}</div>
             ) : null} */}
-                        <label className="label">
+            <label className="label">
               <span className="label-text-alt">
                 <ErrorMessage name="password" />
               </span>

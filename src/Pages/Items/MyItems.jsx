@@ -35,16 +35,16 @@ const MyItems = ({ user }) => {
 
   return (
     <>
-    <p className="text-3xl text-center font-bold mb-20">My Items</p>
+      <p className="text-3xl text-center font-bold mb-20">My Items</p>
       <div className="grid grid-cols-3 place-content-center place-items-center">
         {myItems.msg ? (
           <div className="w-full cols-span-3 font-bold col-start-2 text-center">
-          NO ITEMS FOUND
+            NO ITEMS FOUND
           </div>
         ) : (
           myItems.map((item, i) => (
             <div
-            className="pb-20"
+              className="pb-20"
               key={i}
               onClick={() => {
                 handleEachItem(item.id);
@@ -69,6 +69,15 @@ const MyItems = ({ user }) => {
                     <div className="badge badge-outline">
                       {item.subcategory}
                     </div>
+                    {item.status === "Resolved" ? (
+                      <div className="badge badge-outline bg-green-700 p-3">
+                        {item.status}
+                      </div>
+                    ) : (
+                      <div className="badge badge-outline bg-red-700 p-3">
+                        {item.status}
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>

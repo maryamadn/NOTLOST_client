@@ -90,7 +90,7 @@ const Items = ({ user }) => {
 
   return (
     <div>
-      <div className="grid grid-cols-3 gap-4 w-screen h-full">
+      <div className="grid grid-cols-3 gap-4 w-full h-full">
         <div className="col-start-1 col-span-2 justify-self-end flex gap-5 w-fit">
           <input
             ref={searchRef}
@@ -129,10 +129,10 @@ const Items = ({ user }) => {
           <div className="modal-action"></div>
         </div>
       </div>
-      <div className="grid grid-cols-3 w-screen mt-10">
+      <div className="grid grid-cols-3 w-full mt-10">
         <div className="justify-self-center">
           <p className="font-medium text-2xl text-center">Filters</p>
-          <br/>
+          <br />
           <div className="font-medium">
             <Formik initialValues={initialValues}>
               {({ values, handleChange }) => (
@@ -151,8 +151,8 @@ const Items = ({ user }) => {
                       <option value="Lost">Lost</option>
                       <option value="Found">Found</option>
                     </Field>
-                    <br/>
-                    <br/>
+                    <br />
+                    <br />
                     <p>Category/Subcategory</p>
                     <Field
                       className="select select-bordered w-full max-w-xs"
@@ -179,8 +179,8 @@ const Items = ({ user }) => {
                         );
                       })}
                     </Field>
-                    <br/>
-                    <br/>
+                    <br />
+                    <br />
                     <p>Colour</p>
                     <Field
                       className="select select-bordered w-full max-w-xs"
@@ -195,8 +195,8 @@ const Items = ({ user }) => {
                         <option value={colour}>{colour}</option>
                       ))}
                     </Field>
-                    <br/>
-                    <br/>
+                    <br />
+                    <br />
                     <p>Date Range</p>
                     <div className="grid gap-2 max-w-fit">
                       <p>from</p>
@@ -230,8 +230,8 @@ const Items = ({ user }) => {
                         onChange={handleChange}
                       />
                     </div>
-                    <br/>
-                    <br/>
+                    <br />
+                    <br />
                     <p>Status</p>
                     <Field
                       className="select select-bordered w-full max-w-xs"
@@ -253,51 +253,57 @@ const Items = ({ user }) => {
             </Formik>
           </div>
         </div>
-      <div className="col-start-2 col-span-2 grid grid-cols-3 gap-10 mr-20">
-        {foundItems.msg ? (
-          <div className="w-full cols-span-3 text-lg font-bold col-start-2 text-center">
-            NO ITEMS FOUND
+        <div className="col-start-2 col-span-2 grid grid-cols-3 gap-10 mr-20">
+          {foundItems.msg ? (
+            <div className="w-full cols-span-3 text-lg font-bold col-start-2 text-center">
+              NO ITEMS FOUND
             </div>
-        ) : (
-          foundItems.map((item, i) => (
-            <div
-            className="w-fit h-fit place-self-center w-max"
-              key={i}
-              onClick={() => {
-                handleEachItem(item.id);
-              }}
-            >
-              <div className="card w-full bg-base-100 shadow-xl">
-                <figure>
-                  <img className="object-contain" src={item.array_agg[0]} />
-                </figure>
-                <div className="card-body bg-secondary-focus">
-                  <h2 className="card-title capitalize font-medium">
-                    {item.title}
-                    <div className="ml-4 badge badge-accent uppercase font-medium">
-                      {item.type}
+          ) : (
+            foundItems.map((item, i) => (
+              <div
+                className="w-fit h-fit place-self-center w-96 max-w-xs"
+                key={i}
+                onClick={() => {
+                  handleEachItem(item.id);
+                }}
+              >
+                <div className="card w-full bg-base-100 shadow-xl">
+                  <figure>
+                    <img className="object-contain" src={item.array_agg[0]} />
+                  </figure>
+                  <div className="card-body bg-secondary-focus">
+                    <h2 className="card-title capitalize font-medium">
+                      {item.title}
+                      <div className="ml-4 badge badge-accent uppercase font-medium">
+                        {item.type}
+                      </div>
+                    </h2>
+                    <p className="my-1 font-medium">
+                      <FormatDate date={item.date_time} />
+                    </p>
+                    <div className="card-actions justify-items-start mt-4 grid grid-rows-2 font-medium">
+                      <div className="badge badge-outline p-3">
+                        {item.category}
+                      </div>
+                      <div className="badge badge-outline p-3">
+                        {item.subcategory}
+                      </div>
+                      {item.status === "Resolved" ? (
+                        <div className="badge badge-outline bg-green-700 p-3">
+                          {item.status}
+                        </div>
+                      ) : (
+                        <div className="badge badge-outline bg-red-700 p-3">
+                          {item.status}
+                        </div>
+                      )}
                     </div>
-                  </h2>
-                  <p className="my-1 font-medium">
-                    <FormatDate date={item.date_time} />
-                  </p>
-                  <div className="card-actions justify-items-start mt-4 grid grid-rows-2 font-medium">
-                    <div className="badge badge-outline p-3">{item.category}</div>
-                    <div className="badge badge-outline p-3">
-                      {item.subcategory}
-                    </div>
-                    {item.status === 'Resolved' ? <div className="badge badge-outline bg-green-700 p-3">
-                    {item.status}
-                    </div> : <div className="badge badge-outline bg-red-700 p-3">
-                    {item.status}
-                    </div>}
                   </div>
                 </div>
               </div>
-            </div>
-          ))
-        )}
-      </div>
+            ))
+          )}
+        </div>
       </div>
     </div>
   );

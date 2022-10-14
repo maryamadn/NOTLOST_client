@@ -26,7 +26,7 @@ const Map = () => {
 
   return (
     <div className="">
-      <div className="flex justify-center h-screen w-screen place-self-center">
+      {/* <div className="flex justify-center h-screen w-screen place-self-center">
         <div className="">
           <p className="font-medium">Pick Location</p>
           <Autocomplete>
@@ -55,7 +55,7 @@ const Map = () => {
             <Marker position={center} />
           </GoogleMap>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

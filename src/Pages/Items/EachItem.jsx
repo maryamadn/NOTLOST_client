@@ -15,7 +15,6 @@ import ErrorPage from "../Misc/ErrorPage";
 const SERVER = process.env.REACT_APP_SERVER;
 
 const EachItem = ({ user }) => {
-  
   const [item, setItem] = useState({});
   const [editableItem, setEditableItem] = useState(false);
   const [editItemSuccessful, setEditItemSuccessful] = useState(true);
@@ -28,6 +27,8 @@ const EachItem = ({ user }) => {
 
   const { id } = useParams();
   const navigate = useNavigate();
+
+  document.documentElement.scrollTop = 0;
 
   useEffect(() => {
     const url = urlcat(SERVER, `/items/${id}`);
@@ -154,7 +155,7 @@ const EachItem = ({ user }) => {
     const { errors } = useFormikContext();
     setFormErrors(errors);
   };
-  
+
   return (
     <>
       {!editableItem && (
@@ -164,16 +165,23 @@ const EachItem = ({ user }) => {
             <p className="text-2xl font-medium uppercase mt-3">
               {item.date_time && <FormatDate date={item.date_time} />}
             </p>
-            {item.status === 'Resolved' ? <p className="text-2xl font-medium uppercase mt-3 badge bg-green-800 p-5">{item.status}</p>
-            : <p className="text-2xl font-medium uppercase mt-3 badge bg-red-800 p-5">{item.status}</p>}
+            {item.status === "Resolved" ? (
+              <p className="text-2xl font-medium uppercase mt-3 badge bg-green-800 p-5">
+                {item.status}
+              </p>
+            ) : (
+              <p className="text-2xl font-medium uppercase mt-3 badge bg-red-800 p-5">
+                {item.status}
+              </p>
+            )}
             <div className="flex flex-col gap-2 mt-7">
               <p className="badge badge-outline">{item.category}</p>
               <p className="badge badge-outline">{item.subcategory}</p>
             </div>
           </div>
           <div className="divider"></div>
-          <div className="flex gap-10 place-content-center">
-            <div className="carousel w-80 w-1/3">
+          <div className="grid grid-cols-2 gap-10 place-content-center">
+            <div className="carousel w-2/3 place-self-end w-fit">
               {item.photos &&
                 item.photos.map((photo, i) => (
                   <div key={i} id={i} className="carousel-item relative w-full">
@@ -195,7 +203,7 @@ const EachItem = ({ user }) => {
                   </div>
                 ))}
             </div>
-            <div className="flex flex-col gap-10">
+            <div className="flex flex-col gap-10 p-10">
               <p className="text-4xl font-medium capitalize">{item.title}</p>
               <p className="text-2xl">{item.description}</p>
               {(item.found_lost_by === user.id || user.is_admin) && (
@@ -233,7 +241,11 @@ const EachItem = ({ user }) => {
                 ✕
               </label>
               <div>
-                <EnquireModal status={item.status} found_lost_by={item.found_lost_by} type={item.type} />
+                <EnquireModal
+                  status={item.status}
+                  found_lost_by={item.found_lost_by}
+                  type={item.type}
+                />
               </div>
               <div className="modal-action"></div>
             </div>
