@@ -23,24 +23,21 @@ const signUpValidation = yup.object({
   email: yup
     .string()
     .email("Must be a valid email.")
-    .required("An email address is required."),
+    .required("Required"),
   full_name: yup
     .string()
     .matches(/^[a-zA-Z\s]{4,30}$/, {
       message: "Name should have 4-30 characters, and contain only alphabets.",
       excludeEmptyString: true,
     })
-    .required("A username is required."),
+    .required("Required"),
   phone: yup
     .string()
     .matches(/^[89]\d{7}$/, {
       message: "Please enter a valid Singapore phone number.",
       excludeEmptyString: true,
     })
-    .required("A phone number is required."),
-  // is_admin: yup
-  //   .boolean()
-  //   .required("At least one subject is required."),
+    .required("Required"),
 });
 
 export default signUpValidation;

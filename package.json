@@ -9,7 +9,7 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.1.2",
-    "daisyui": "^2.31.0",
+    "daisyui": "^2.41.0",
     "date-fns": "^2.29.3",
     "flowbite": "^1.5.3",
     "flowbite-datepicker": "^1.2.2",
@@ -21,6 +21,7 @@
     "react-icons": "^4.4.0",
     "react-router-dom": "^6.4.2",
     "react-scripts": "5.0.1",
+    "react-toastify": "^9.1.1",
     "urlcat": "^2.0.4",
     "web-vitals": "^2.1.4",
     "yup": "^0.32.11"

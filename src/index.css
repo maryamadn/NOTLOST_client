@@ -6,3 +6,45 @@ input::-webkit-calendar-picker-indicator {
     background-color: #cd984a;
     margin-left: 10px;
 }
+
+.Toastify__toast-container {
+    width: fit-content !important;
+    /* opacity: 0.8; */
+  }
+  
+  .Toastify__toast-body {
+    margin: 10px !important;
+  }
+  
+  .Toastify__toast {
+    background: hsl(var(--sc)) !important;
+    font-weight: bold;
+    color: hsl(var(--s)) !important;
+  }
+  
+  .Toastify__toast::after {
+    background-color: hsl(var(--s)) !important;
+  }
+  
+  .Toastify__progress-bar {
+    background: hsl(var(--s)) !important;
+  }
+  
+  .Toastify__close-button {
+    color: hsl(var(--s)) !important;
+  }
+  
+  .Toastify__close-button:hover {
+    color: white !important;
+  }
+
+@media screen and (max-width: 650px) {
+    .Toastify__toast-container {
+      width: fit-content !important;
+      margin: 10px 10px 0px 10px !important;
+    }
+  
+    .Toastify__toast-body {
+      font-size: 12px;
+    }
+}

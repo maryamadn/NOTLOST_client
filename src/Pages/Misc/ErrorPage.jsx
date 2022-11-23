@@ -1,10 +1,20 @@
 const ErrorPage = () => {
-    return (
-        <div className="m-auto">
-            <p className="text-3xl font-bold">You are not authorised to see this page. Please sign up/sign in!</p>
+  return (
+    <>
+      <div className="hero">
+        <div className="hero-content text-center">
+          <div className="max-w-md">
+            <h1 className="text-5xl font-bold">Create An Account</h1>
+            <p className="py-6">
+            You need an account to have access! Create an account to create lost and found items and enquire about
+            them.
+            </p>
+            <button className="btn btn-secondary">Sign Up</button>
+          </div>
         </div>
-    )
-  };
-  
-  export default ErrorPage;
-  
+      </div>
+    </>
+  );
+};
+
+export default ErrorPage;

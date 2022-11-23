@@ -1,9 +1,9 @@
 const PhotoUpload = ({ setImagesSelected, setPhotosUploaded }) => {
 
   return (
-    <>
       <input
         type="file"
+        className="text-[10px] sm:text-xs md:text-sm"
         id="fileInput"
         multiple
         onChange={(e) => {
@@ -16,7 +16,6 @@ const PhotoUpload = ({ setImagesSelected, setPhotosUploaded }) => {
           }
         }}
       />
-    </>
   );
 };
 

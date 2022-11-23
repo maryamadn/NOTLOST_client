@@ -2,8 +2,9 @@ import axios from "axios";
 import urlcat from "urlcat";
 import { useEffect, useState, useRef } from "react";
 import { Field, Form, Formik, useFormikContext } from "formik";
-import { format, parse, parseISO } from "date-fns";
-import { IoIosCreate, IoMdClose } from "react-icons/io";
+import { format } from "date-fns";
+import { IoIosCreate } from "react-icons/io";
+import { RiFilter2Fill } from "react-icons/ri";
 
 import catsubcatFilters from "../../Data/catsubcatFilters";
 import colours from "../../Data/colours";
@@ -12,10 +13,6 @@ import { useNavigate } from "react-router-dom";
 import FormatDate from "../../Components/FormatDate";
 
 const SERVER = process.env.REACT_APP_SERVER;
-
-// import {setDefaultOptions} from 'date-fns'
-// import {ms} from 'date-fns/locale'
-// setDefaultOptions({ locale: ms })
 
 const Items = ({ user }) => {
   const initialValues = {
@@ -29,7 +26,7 @@ const Items = ({ user }) => {
 
   const [filters, setFilters] = useState(initialValues);
   const [search, setSearch] = useState("");
-  const [foundItems, setFoundItems] = useState([]);
+  const [items, setItems] = useState([]);
   const [renderItems, setRenderItems] = useState(true);
 
   const [isOpen, setIsOpen] = useState(false);
@@ -64,8 +61,7 @@ const Items = ({ user }) => {
     axios
       .get(url)
       .then(({ data }) => {
-        console.log(data);
-        setFoundItems(data);
+        setItems(data);
       })
       .catch((error) => {
         console.log(error);
@@ -90,19 +86,22 @@ const Items = ({ user }) => {
 
   return (
     <div>
-      <div className="grid grid-cols-3 gap-4 w-full h-full">
-        <div className="col-start-1 col-span-2 justify-self-end flex gap-5 w-fit">
+      <div className="grid grid-rows-2 gap-6 justify-center justify-items-center">
+        <div className="justify-self-end flex gap-5 w-fit">
           <input
             ref={searchRef}
-            className="input input-bordered w-max max-w-xs"
+            className="input input-bordered input-xs md:input-sm w-36 sm:w-52 md:w-80 text-xs"
           />
-          <button onClick={handleSearch} className="btn btn-secondary">
+          <button
+            onClick={handleSearch}
+            className="btn btn-secondary btn-xs text-xs md:btn-sm"
+          >
             search
           </button>
         </div>
         <label
           htmlFor="create-item-modal"
-          className="btn modal-button btn-secondary col-start-3 col-span-1 justify-self-center w-fit"
+          className="btn gap-1 modal-button btn-secondary btn-xs text-xs md:btn-sm w-max"
         >
           <IoIosCreate />
           Create Item
@@ -110,10 +109,10 @@ const Items = ({ user }) => {
       </div>
       <input type="checkbox" id="create-item-modal" className="modal-toggle" />
       <div className="modal">
-        <div className="modal-box bg-secondary-focus">
+        <div className="modal-box w-fit">
           <label
             htmlFor="create-item-modal"
-            className="btn btn-accent btn-sm btn-circle absolute right-2 top-2"
+            className="btn btn-secondary btn-xs btn-circle absolute right-2 top-2"
           >
             ✕
           </label>
@@ -126,174 +125,188 @@ const Items = ({ user }) => {
               onClose={() => setIsOpen(false)}
             />
           </div>
-          <div className="modal-action"></div>
+          {!user.id && (
+            <div className="modal-action">
+              <label
+                htmlFor="my-modal"
+                className="btn btn-secondary btn-xs md:btn-sm"
+                onClick={() => {
+                  navigate("/signup");
+                }}
+              >
+                Sign Up
+              </label>
+            </div>
+          )}
         </div>
       </div>
-      <div className="grid grid-cols-3 w-full mt-10">
-        <div className="justify-self-center">
-          <p className="font-medium text-2xl text-center">Filters</p>
-          <br />
-          <div className="font-medium">
+      <div className="divider"></div> 
+      <div className="grid justify-center gap-5">
+        <p className="text-sm sm:text-lg md:text-xl text-center font-bold">
+          ITEMS
+        </p>
+        <div tabIndex="0" className="collapse collapse-arrow w-40 sm:w-52 justify-self-center">
+          <input type="checkbox" className="w-full" />
+          <div className="collapse-title btn btn-ghost btn-active btn-xs h-[60px] font-medium content-center justify-start">
+            Filters
+          </div>
+          <div className="collapse-content">
             <Formik initialValues={initialValues}>
               {({ values, handleChange }) => (
-                <div>
-                  <Form>
-                    <p>Type</p>
-                    <Field
-                      className="select select-bordered w-full max-w-xs"
-                      as="select"
-                      name="type"
-                      value={values.type}
-                      onChange={handleChange}
-                    >
-                      <option disabled>select</option>
-                      <option>All Types</option>
-                      <option value="Lost">Lost</option>
-                      <option value="Found">Found</option>
-                    </Field>
-                    <br />
-                    <br />
-                    <p>Category/Subcategory</p>
-                    <Field
-                      className="select select-bordered w-full max-w-xs"
-                      as="select"
-                      name="catSubcat"
-                      value={values.catSubcat}
-                      onChange={handleChange}
-                    >
-                      <option disabled>select</option>
-                      <option style={{ fontWeight: "bold" }}>
-                        All Categories
+                <Form className="font-medium">
+                  <label className="label text-xs sm:text-sm mt-3">Type</label>
+                  <Field
+                    className="select select-bordered select-sm text-xs md:select-md md:text-sm w-full"
+                    as="select"
+                    name="type"
+                    value={values.type}
+                    onChange={handleChange}
+                  >
+                    <option disabled>select</option>
+                    <option>All Types</option>
+                    <option value="Lost">Lost</option>
+                    <option value="Found">Found</option>
+                  </Field>
+                  <label className="label text-xs sm:text-sm mt-3">
+                    Category/Subcategory
+                  </label>
+                  <Field
+                    className="select select-bordered select-sm text-xs md:select-md md:text-sm w-full"
+                    as="select"
+                    name="catSubcat"
+                    value={values.catSubcat}
+                    onChange={handleChange}
+                  >
+                    <option disabled>select</option>
+                    <option style={{ fontWeight: "bold" }}>
+                      All Categories
+                    </option>
+                    {catsubcatFilters.map((filter) => {
+                      const key = Object.keys(filter)[0];
+                      return (
+                        <>
+                          <option value={key} style={{ fontWeight: "bold" }}>
+                            {key}
+                          </option>
+                          {filter[key].map((value) => (
+                            <option value={key + "|" + value}>{value}</option>
+                          ))}
+                        </>
+                      );
+                    })}
+                  </Field>
+                  <label className="label text-xs sm:text-sm mt-3">
+                    Colour
+                  </label>
+                  <Field
+                    className="select select-bordered select-sm text-xs md:select-md md:text-sm w-full"
+                    as="select"
+                    name="colour"
+                    value={values.colour}
+                    onChange={handleChange}
+                  >
+                    <option disabled>select</option>
+                    <option>All Colours</option>
+                    {colours.map((colour) => (
+                      <option key={colour} value={colour}>
+                        {colour}
                       </option>
-                      {catsubcatFilters.map((filter) => {
-                        const key = Object.keys(filter)[0];
-                        return (
-                          <>
-                            <option value={key} style={{ fontWeight: "bold" }}>
-                              {key}
-                            </option>
-                            {filter[key].map((value) => (
-                              <option value={key + "|" + value}>{value}</option>
-                            ))}
-                          </>
-                        );
-                      })}
-                    </Field>
-                    <br />
-                    <br />
-                    <p>Colour</p>
-                    <Field
-                      className="select select-bordered w-full max-w-xs"
-                      as="select"
-                      name="colour"
-                      value={values.colour}
+                    ))}
+                  </Field>
+                  <label className="label text-xs sm:text-sm mt-3">
+                    Date Range
+                  </label>
+                  <div className="grid gap-2 max-w-fit">
+                    <label className="label text-xs sm:text-sm font-normal">
+                      from
+                    </label>
+                    <input
+                      className="input input-bordered bg-base-100 select-sm text-xs md:select-md md:text-sm"
+                      type="date"
+                      name="date_range_from"
+                      value={
+                        values.date_range_from > values.date_range_to
+                          ? values.date_range_to
+                          : values.date_range_from
+                      }
+                      max={values.date_range_to}
                       onChange={handleChange}
-                    >
-                      <option disabled>select</option>
-                      <option>All Colours</option>
-                      {colours.map((colour) => (
-                        <option value={colour}>{colour}</option>
-                      ))}
-                    </Field>
-                    <br />
-                    <br />
-                    <p>Date Range</p>
-                    <div className="grid gap-2 max-w-fit">
-                      <p>from</p>
-                      <input
-                        style={{
-                          backgroundColor: "#0c0c0c",
-                          borderRadius: "10px",
-                          color: "#d0993f",
-                        }}
-                        type="date"
-                        name="date_range_from"
-                        value={
-                          values.date_range_from > values.date_range_to
-                            ? values.date_range_to
-                            : values.date_range_from
-                        }
-                        max={values.date_range_to}
-                        onChange={handleChange}
-                      />
-                      <p>to</p>
-                      <input
-                        style={{
-                          backgroundColor: "#0c0c0c",
-                          borderRadius: "10px",
-                          color: "#d0993f",
-                        }}
-                        type="date"
-                        name="date_range_to"
-                        value={values.date_range_to}
-                        max={format(new Date(), "yyyy-MM-dd")}
-                        onChange={handleChange}
-                      />
-                    </div>
-                    <br />
-                    <br />
-                    <p>Status</p>
-                    <Field
-                      className="select select-bordered w-full max-w-xs"
-                      as="select"
-                      name="status"
-                      value={values.status}
+                    />
+                    <label className="label text-xs sm:text-sm font-normal">
+                      to
+                    </label>
+                    <input
+                      className="input input-bordered bg-base-100 select-sm text-xs md:select-md md:text-sm"
+                      type="date"
+                      name="date_range_to"
+                      value={values.date_range_to}
+                      max={format(new Date(), "yyyy-MM-dd")}
                       onChange={handleChange}
-                    >
-                      <option disabled>select</option>
-                      <option>All Statuses</option>
-                      <option value="Resolved">Resolved</option>
-                      <option value="Unresolved">Unresolved</option>
-                    </Field>
-
-                    <HandleOnChange />
-                  </Form>
-                </div>
+                    />
+                  </div>
+                  <label className="label text-xs sm:text-sm">Status</label>
+                  <Field
+                    className="select select-bordered select-sm text-xs md:select-md md:text-sm w-full"
+                    as="select"
+                    name="status"
+                    value={values.status}
+                    onChange={handleChange}
+                  >
+                    <option disabled>select</option>
+                    <option>All Statuses</option>
+                    <option value="Resolved">Resolved</option>
+                    <option value="Unresolved">Unresolved</option>
+                  </Field>
+                  <HandleOnChange />
+                </Form>
               )}
             </Formik>
           </div>
         </div>
-        <div className="col-start-2 col-span-2 grid grid-cols-3 gap-10 mr-20">
-          {foundItems.msg ? (
-            <div className="w-full cols-span-3 text-lg font-bold col-start-2 text-center">
-              NO ITEMS FOUND
+
+        <div className="grid gap-5 sm:grid-cols-2 md:grid-cols-3">
+          {items.msg ? (
+            <div className="w-full font-bold text-center text-center text-xs sm:text-sm md:text-lg">
+              No items found
             </div>
           ) : (
-            foundItems.map((item, i) => (
+            items.map((item, i) => (
               <div
-                className="w-fit h-fit place-self-center w-96 max-w-xs"
+                className="w-fit h-fit place-self-center"
                 key={i}
                 onClick={() => {
                   handleEachItem(item.id);
                 }}
               >
-                <div className="card w-full bg-base-100 shadow-xl">
+                <div className="card w-40 sm:w-44 md:w-48 bg-base-100 shadow-xl">
                   <figure>
                     <img className="object-contain" src={item.array_agg[0]} />
                   </figure>
-                  <div className="card-body bg-secondary-focus">
-                    <h2 className="card-title capitalize font-medium">
+                  <div className="card-body bg-secondary-focus p-5 sm:p-6 md:p-7">
+                    <h2 className="grid card-title capitalize font-medium text-xs sm:text-sm md:text-lg">
+                      <div className="truncate">
                       {item.title}
-                      <div className="ml-4 badge badge-accent uppercase font-medium">
+                      </div>
+                      <div className="row-start-1 sm:col-start-2 md:ml-4 badge badge-accent uppercase font-medium text-[10px] sm:text-xs md:text-sm">
                         {item.type}
                       </div>
                     </h2>
-                    <p className="my-1 font-medium">
+                    <p className="my-1 font-medium text-[10px] sm:text-xs md:text-sm">
                       <FormatDate date={item.date_time} />
                     </p>
                     <div className="card-actions justify-items-start mt-4 grid grid-rows-2 font-medium">
-                      <div className="badge badge-outline p-3">
+                      <div className="badge badge-outline sm:p-2 md:p-3 text-[10px] sm:text-xs md:text-sm truncate">
                         {item.category}
                       </div>
-                      <div className="badge badge-outline p-3">
+                      <div className="badge badge-outline sm:p-2 md:p-3 text-[10px] sm:text-xs md:text-sm truncate">
                         {item.subcategory}
                       </div>
                       {item.status === "Resolved" ? (
-                        <div className="badge badge-outline bg-green-700 p-3">
+                        <div className="badge badge-outline bg-green-700 sm:p-2 md:p-3 text-[10px] sm:text-xs md:text-sm">
                           {item.status}
                         </div>
                       ) : (
-                        <div className="badge badge-outline bg-red-700 p-3">
+                        <div className="badge badge-outline bg-red-700 sm:p-2 md:p-3 text-[10px] sm:text-xs md:text-sm">
                           {item.status}
                         </div>
                       )}

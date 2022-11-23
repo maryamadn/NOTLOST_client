@@ -4,12 +4,18 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import urlcat from "urlcat";
 import signInValidation from "../../Validations/signInValidation";
 import axios from "axios";
+import { useEffect } from "react";
 
 const SERVER = process.env.REACT_APP_SERVER;
-const SignIn = ({ setUser }) => {
+const SignIn = ({ user, setUser }) => {
   const [signInSuccessful, setSignInSuccessful] = useState(true);
-
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user.id !== undefined) {
+    navigate("/items")
+    }
+  });
 
   //to decode token
   const parseJwt = (token) => {
@@ -37,23 +43,18 @@ const SignIn = ({ setUser }) => {
       .then(({ data }) => {
         const user = parseJwt(data.token);
         setUser(user);
-        console.log(user);
         navigate("/items");
       })
       .catch((error) => {
-        console.log(error);
         if (error.response.data.error === "Validation failed.") {
           setSignInSuccessful(false);
-        } else {
-          console.log("Unable to sign in.");
         }
       });
   };
 
   return (
-    <div className="container items-center text-center max-w-fit p-10 bg-base-300 rounded-box card">
+    <div className="container items-center text-left w-44 sm:w-60 md:w-96 p-5 bg-base-200 rounded-box card">
       <Formik
-        className="container items-center text-center"
         initialValues={{
           username: "",
           password: "",
@@ -66,50 +67,40 @@ const SignIn = ({ setUser }) => {
       >
         {({ values, errors, touched, handleChange, handleBlur }) => (
           <Form>
-            <br />
-            <div className="text-center">
+            <label className="label text-xs sm:text-sm font-medium">
+              Username
+            </label>
               <Field
-                placeholder="username"
-                className="input input-bordered w-full max-w-xs input-sm"
+                className="input input-bordered input-xs md:input-sm w-full text-xs"
                 name="username"
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.username}
               />
-
-              {errors.username && touched.username ? (
-                <div className="label-text-alt mt-3 text-left">
-                  {errors.username}
-                </div>
-              ) : null}
-            </div>
-            {/* <label className="label">
-              <span className="label-text-alt">
+            <label className="label py-1">
+              <span className="label-text-alt text-[10px] sm:text-[12px] w-[135px] sm:w-[165px] md:w-[190px]">
                 <ErrorMessage name="username" />
               </span>
-            </label> */}
-            <br />
+            </label>
+            <label className="label text-xs sm:text-sm font-medium">
+              Password
+            </label>
             <Field
               type="password"
-              placeholder="password"
-              className="input input-bordered w-full max-w-xs input-sm"
+              className="input input-bordered input-xs md:input-sm w-full text-xs"
               name="password"
               onChange={handleChange}
               onBlur={handleBlur}
               value={values.password}
             />
-            {/* {errors.password && touched.password ? (
-              <div>{errors.password}</div>
-            ) : null} */}
-            <label className="label">
-              <span className="label-text-alt">
+            <label className="label py-1">
+              <span className="label-text-alt text-[10px] sm:text-[12px] w-[135px] sm:w-[165px] md:w-[190px]">
                 <ErrorMessage name="password" />
               </span>
             </label>
-            <br />
             <button
               type="submit"
-              className="btn btn-outline btn-ghost"
+              className="btn btn-secondary"
               disabled={
                 !(
                   Object.keys(errors).length === 0 &&
@@ -119,7 +110,7 @@ const SignIn = ({ setUser }) => {
             >
               Sign in
             </button>
-            {!signInSuccessful && <p>Sign in failed.</p>}
+            {!signInSuccessful && <p className="label-text-alt text-[10px] sm:text-[12px] pt-2 pl-2">Sign in failed.</p>}
           </Form>
         )}
       </Formik>
