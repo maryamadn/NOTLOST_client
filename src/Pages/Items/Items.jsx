@@ -152,7 +152,7 @@ const Items = ({ user }) => {
           </div>
           <div className="collapse-content">
             <Formik initialValues={initialValues}>
-              {({ values, handleChange }) => (
+              {({ values, handleChange, handleReset }) => (
                 <Form className="font-medium">
                   <label className="label text-xs sm:text-sm mt-3">Type</label>
                   <Field
@@ -258,6 +258,7 @@ const Items = ({ user }) => {
                     <option value="Unresolved">Unresolved</option>
                   </Field>
                   <HandleOnChange />
+                  <button onClick={handleReset} className='mt-3 btn btn-ghost btn-active btn-xs text-xs md:btn-sm'>reset</button>
                 </Form>
               )}
             </Formik>
