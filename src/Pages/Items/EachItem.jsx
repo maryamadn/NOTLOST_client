@@ -98,7 +98,7 @@ const EachItem = ({ user }) => {
           const linkDone = () =>
             axios
               .post(
-                "https://api.cloudinary.com/v1_1/dtomk0u1h/image/upload",
+                "https://api.cloudinary.com/v1_1/a6cbnsd/image/upload",
                 formData
               )
               .then(async ({ data }) => {

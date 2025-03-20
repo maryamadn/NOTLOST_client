@@ -42,7 +42,7 @@ const CreateItemModal = ({ setRenderItems, renderItems, user }) => {
           formData.append("upload_preset", "bb4akto2");
           axios
             .post(
-              "https://api.cloudinary.com/v1_1/dtomk0u1h/image/upload",
+              "https://api.cloudinary.com/v1_1/a6cbnsd/image/upload",
               formData
             )
             .then(({ data }) => {
